@@ -33,8 +33,8 @@
 <meta property="og:title" content="Add a public key to your GitHub or gitlab or other account — store_public_key" />
 
 <meta property="og:description" content="store_public_key() adds the public key associated with a key ID to your
-GitHub or Gitlab account if token is available. Otherwise it will print the
-public key for you to copy manually into GitHub/Gitlab or elsewhere." />
+GitHub or Gitlab account if token is available. Otherwise it will put the
+public key on your clipboard for you to copy manually into GitHub/Gitlab or elsewhere." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -124,8 +124,8 @@ public key for you to copy manually into GitHub/Gitlab or elsewhere." />
     <div class="ref-description">
     
     <p><code>store_public_key()</code> adds the public key associated with a key ID to your
-GitHub or Gitlab account if token is available. Otherwise it will print the
-public key for you to copy manually into GitHub/Gitlab or elsewhere.</p>
+GitHub or Gitlab account if token is available. Otherwise it will put the
+public key on your clipboard for you to copy manually into GitHub/Gitlab or elsewhere.</p>
     
     </div>
 
@@ -138,33 +138,34 @@ public key for you to copy manually into GitHub/Gitlab or elsewhere.</p>
     <tr>
       <th>key</th>
       <td><p>A character string containing the ID of a key to use, use the
-return value of <code>sign_commits_with_key()</code>. If you are not sure, what key
+return value of <code>sign_commits_with_key()</code>. If you are not sure what key
 you want to use, you can list your locally available keys with
 <code><a href='https://www.rdocumentation.org/packages/gpg/topics/gpg_keys'>gpg::gpg_list_keys()</a></code>. The email address corresponding to this key must be
 identical to the email address that you use with GitHub/Gitlab etc.</p></td>
     </tr>
     <tr>
       <th>service</th>
-      <td><p>NULL currently supported services: <code>"gh"</code> for GitHub (access
+      <td><p><code>NULL</code> by default. Currently supported services: <code>"gh"</code> for GitHub (access
 token is necessary) or <code>"gl"</code> for gitlab (url and access token is
-necessary). If left NULL, no upload is attempted, public key is returned
+necessary). If left <code>NULL</code>, no upload is attempted, public key is returned
 for manual upload.</p></td>
     </tr>
     <tr>
       <th>.token</th>
       <td><p>Either GitHub Personal Access Token with at least
 <code>write:gpg_key</code> scope enabled. You can grant access to tokens
-<a href='https://github.com/settings/tokens'>here</a>. Supply this with <code>service = "gh"</code>. Or Gitlab personal access token with at least <code>api</code> scope enabled.
+<a href='https://github.com/settings/tokens'>here</a>. Supply this with <code>service = "gh"</code>.
+Or Gitlab personal access token with at least <code>api</code> scope enabled.
 Supply this with <code>service = "gl"</code>. If your PAT is stored in an environment
 variable <code>GITHUB_PAT</code> (for <code>service = "gh"</code>) or <code>GITLAB_PAT</code> (for <code>service = "gl"</code>) you do not need to supply the token manually.</p></td>
     </tr>
     <tr>
       <th>gitlab_url</th>
-      <td><p>NULL by default, or your gitlab url for <code>service = "gl"</code>.</p></td>
+      <td><p><code>NULL by default</code>, or your gitlab url for <code>service = "gl"</code>.</p></td>
     </tr>
     <tr>
       <th>open_url</th>
-      <td><p>logical, whether open relevant URLs automatically.</p></td>
+      <td><p>logical, whether to open relevant URLs automatically.</p></td>
     </tr>
     </table>
     
@@ -185,6 +186,8 @@ or <a href='https://docs.gitlab.com/ee/user/profile/personal_access_tokens.html'
 <span class='fu'>store_public_key</span>(<span class='kw'>key</span> <span class='kw'>=</span> <span class='no'>new_key</span>)
 <span class='co'># if your GitHub Personal Access Token is stored in `.Renviron` as MY_GITHUB_PAT</span>
 <span class='fu'>store_public_key</span>(<span class='kw'>key</span> <span class='kw'>=</span> <span class='no'>new_key</span>, <span class='kw'>service</span> <span class='kw'>=</span> <span class='st'>"gh"</span>, <span class='kw'>.token</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/Sys.getenv'>Sys.getenv</a></span>(<span class='st'>'MY_GITHUB_PAT'</span>))
+<span class='co'># if you have a gitlab server at https://gitlab.example.com</span>
+<span class='fu'>store_public_key</span>(<span class='kw'>key</span> <span class='kw'>=</span> <span class='no'>new_key</span>, <span class='kw'>service</span> <span class='kw'>=</span> <span class='st'>"gl"</span>, <span class='kw'>gitlab_url</span> <span class='kw'>=</span> <span class='st'>"https://gitlab.example.com"</span>)
 <span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

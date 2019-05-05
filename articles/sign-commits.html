@@ -92,6 +92,7 @@
 
     
     
+<p><img src="assets/global_1.gif"></p>
 <div id="background" class="section level1">
 <h1 class="hasAnchor">
 <a href="#background" class="anchor"></a>Background</h1>
@@ -155,16 +156,27 @@
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1">new_key &lt;-<span class="st"> </span><span class="kw">sign_commits_with_key</span>(</a>
 <a class="sourceLine" id="cb1-2" data-line-number="2">  <span class="dt">name =</span> <span class="st">"John Doe"</span>, <span class="dt">email =</span> <span class="st">"johndoe@example.com"</span></a>
 <a class="sourceLine" id="cb1-3" data-line-number="3">)</a></code></pre></div>
-<pre><code>#&gt; `John Doe` (as provided) and
+<pre><code>#&gt; John Doe` (as provided) and
 #&gt; `johndoe@example.com` (as provided)
 #&gt; will be used to generate a new gpg key.
-#&gt; Please enter password for new gpg key: ********
-#&gt; Do you want to sign all future commits with `ABCDEFGHIJKLMNOP` in all repositories?
+#&gt; Do you want to protect your new gpg key with a password? Password protection is strongly recommended unless you are only testing.
 #&gt; 
 #&gt; 1: Yes
-#&gt; 2: Not now
-#&gt; 3: Absolutely not
-#&gt; Selection: 1</code></pre>
+#&gt; 2: no
+#&gt; 3: cancel
+#&gt; 
+#&gt; Selection: 1
+#&gt; Please enter password for new gpg key, to cancel press `Cancel` in Rstudio or `Ctrl + c` in terminal: ********
+#&gt; ✔ Key with id `D21F047BDE943F74` successfully generated.
+#&gt; Do you want to sign future commits with `D21F047BDE943F74` in all repositories?
+#&gt; 
+#&gt; 1: Absolutely not
+#&gt; 2: Yes
+#&gt; 3: Not now
+#&gt; 
+#&gt; Selection: 2
+#&gt; ● The next step is uploading the public key to GitHub or alternative (unless it is already uploaded),  which you can do by passing the return value ("D21F047BDE943F74") to `store_public_key`.
+#&gt; [1] "D21F047BDE943F74"</code></pre>
 <p>Next step: <a href="#upload_key">upload your public key</a> to GitHub/Gitlab/etc.</p>
 </div>
 <div id="multiple" class="section level2">
@@ -191,17 +203,12 @@
 <p>In yet another work-related repository:</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="fu">git</span> config user.email jd@company.com</a></code></pre></div>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="kw">sign_commits_with_key</span>(<span class="dt">global =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
-<pre><code>#&gt; Existing key found: 1234561234561234.
-#&gt; Corresponding email: jd@company.com (based on local git config).
+<pre><code>#&gt; ✔ Existing key found: `D21F047BDE943F74`.
+#&gt; Corresponding email: `johndoe@example.com` (based on global git config).
 #&gt; 
-#&gt; Do you want to sign all future commits with `1234561234561234` in this repository?
-#&gt; 
-#&gt; 1: Yes
-#&gt; 2: Absolutely not
-#&gt; 3: Not now
-#&gt; 
-#&gt; Selection: 1
-#&gt; [1] "1234561234561234"</code></pre>
+#&gt; ✔ Everything is already set on your local machine for signing commits.
+#&gt; ● The next step is uploading the public key to GitHub or alternative (unless it is already uploaded),  which you can do by passing the return value ("D21F047BDE943F74") to `store_public_key`.
+#&gt; [1] "D21F047BDE943F74"</code></pre>
 <p>You may choose to set one of them globally which thus will be the default key to use in a repository where the repository level configs are not set to a different value.</p>
 </div>
 <div id="single-email-address-existing-key" class="section level2">
@@ -212,17 +219,6 @@
 <h3 class="hasAnchor">
 <a href="#provide-key-id" class="anchor"></a>provide key id</h3>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="kw">sign_commits_with_key</span>(<span class="dt">key =</span> <span class="st">"ABCDEFGHIJKLMNOP"</span>)</a></code></pre></div>
-</div>
-<div id="find-based-on-user-name-andor-email" class="section level3">
-<h3 class="hasAnchor">
-<a href="#find-based-on-user-name-andor-email" class="anchor"></a>find based on user name and/or email</h3>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="kw">sign_commits_with_key</span>(<span class="dt">name =</span> <span class="st">"John Doe"</span>)</a></code></pre></div>
-<pre><code>#&gt; Existing key found: ABCDEFGHIJKLMNOP.
-#&gt; Corresponding email: johndoe@example.com (based on local git config).
-#&gt; 
-#&gt; Do you want to sign all future commits with `ABCDEFGHIJKLMNOP` in all repositories?
-#&gt; ...</code></pre>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1"><span class="kw">sign_commits_with_key</span>(<span class="dt">email =</span> <span class="st">"johndoe@example.com"</span>)</a></code></pre></div>
 </div>
 </div>
 </div>
@@ -291,7 +287,7 @@
 <h1 class="hasAnchor">
 <a href="#further-details" class="anchor"></a>Further details</h1>
 <p>If you use other gpg program, for example gnupg2 on Linux, you have to run the following first:</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb13-1" data-line-number="1"><span class="fu">git</span> config --global gpg.program gpg2</a></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="fu">git</span> config --global gpg.program gpg2</a></code></pre></div>
 <p>In addition to generating a GPG keys, the following git config elements are manipulated:</p>
 <ul>
 <li><code>gpg.program</code></li>
